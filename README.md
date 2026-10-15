@@ -1,5 +1,7 @@
 # Shake-N-Back
 
+*If you ain't shakin', you're forgettin'.* A nod to Talladega Nights' "Shake and bake!"
+
 A free, ad-free Dual N-Back working-memory trainer for Android, built with Kotlin and Jetpack Compose.
 
 Each turn a square lights up on a 3×3 grid and a letter is spoken. Tap **Position** when the square matches the one *N* turns ago, and **Sound** when the letter does. Levels go up and down automatically as you improve.
@@ -15,6 +17,8 @@ Each turn a square lights up on a 3×3 grid and a letter is spoken. Tap **Positi
 - A chart of your level history, plus today/total/peak stats
 - Settings: manual level, time per turn (2–4 s), auto-levelling, feedback, haptics
 - Letters are spoken with the system text-to-speech engine, so there are no audio assets
+- **Shake controls:** shake to start a session, to restart one mid-game, or to go again from the results screen (can be turned off)
+- A fist-bump celebration when you level up
 - Hardware keyboard support (`A` = position, `L` = sound)
 - Fully offline. No accounts, no tracking, and no permissions beyond the TTS query.
 
@@ -22,7 +26,7 @@ Each turn a square lights up on a 3×3 grid and a letter is spoken. Tap **Positi
 
 ```
 core/   Pure-Kotlin game engine (no Android deps), unit tested
-        SequenceGenerator · Session (responses + scoring) · LevelRules
+        SequenceGenerator · Session (responses + scoring) · LevelRules · ShakeDetector
 app/    Android app (Compose)
         AppViewModel (session loop + navigation) · data/ (DataStore) · audio/ (TTS) · ui/
 ```
@@ -46,7 +50,6 @@ Debug builds are signed with the committed `app/debug.keystore` (standard Androi
 
 ## Roadmap ideas
 
-- **Shake** controls: an optional shake or tilt gesture as an answer, or to start or pause
 - More modes: single, triple (+ colour), arithmetic, variable N
 - Recorded letter audio as an alternative to TTS
 - Richer stats: per-modality trends, streaks, daily reminders

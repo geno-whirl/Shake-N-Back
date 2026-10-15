@@ -108,6 +108,13 @@ fun SettingsScreen(
                     )
                     HorizontalDivider()
                     SwitchRow(
+                        title = "Shake controls",
+                        subtitle = "Shake to start a session, or to restart one mid-game",
+                        checked = settings.shakeControls,
+                        onCheckedChange = { value -> onChange { it.copy(shakeControls = value) } },
+                    )
+                    HorizontalDivider()
+                    SwitchRow(
                         title = "Haptics",
                         subtitle = "Vibrate lightly on each tap",
                         checked = settings.haptics,

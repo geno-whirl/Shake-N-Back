@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.inset
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import app.shakenback.core.LevelRules
 import app.shakenback.data.SessionRecord
@@ -58,6 +59,7 @@ fun HomeScreen(
     settings: Settings,
     history: List<SessionRecord>,
     speechReady: Boolean?,
+    shakeHint: Boolean,
     onStart: () -> Unit,
     onOpenSettings: () -> Unit,
 ) {
@@ -94,6 +96,15 @@ fun HomeScreen(
                 Icon(Icons.Default.PlayArrow, contentDescription = null)
                 Spacer(Modifier.width(8.dp))
                 Text("Start session", style = MaterialTheme.typography.titleMedium)
+            }
+            if (shakeHint) {
+                Text(
+                    text = "…or give your phone a good shake",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
+                )
             }
 
             if (speechReady == false) SpeechWarning()

@@ -62,6 +62,7 @@ class ProgressRepository(context: Context) {
             autoProgress = prefs[Keys.AUTO_PROGRESS] ?: defaults.autoProgress,
             showFeedback = prefs[Keys.SHOW_FEEDBACK] ?: defaults.showFeedback,
             haptics = prefs[Keys.HAPTICS] ?: defaults.haptics,
+            shakeControls = prefs[Keys.SHAKE_CONTROLS] ?: defaults.shakeControls,
         )
     }
 
@@ -72,6 +73,7 @@ class ProgressRepository(context: Context) {
         prefs[Keys.AUTO_PROGRESS] = settings.autoProgress
         prefs[Keys.SHOW_FEEDBACK] = settings.showFeedback
         prefs[Keys.HAPTICS] = settings.haptics
+        prefs[Keys.SHAKE_CONTROLS] = settings.shakeControls
     }
 
     private fun decodeHistory(raw: String?): List<SessionRecord> =
@@ -85,6 +87,7 @@ class ProgressRepository(context: Context) {
         val AUTO_PROGRESS = booleanPreferencesKey("auto_progress")
         val SHOW_FEEDBACK = booleanPreferencesKey("show_feedback")
         val HAPTICS = booleanPreferencesKey("haptics")
+        val SHAKE_CONTROLS = booleanPreferencesKey("shake_controls")
         val HISTORY = stringPreferencesKey("history")
     }
 

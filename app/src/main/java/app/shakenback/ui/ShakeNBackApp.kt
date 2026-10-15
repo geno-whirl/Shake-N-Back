@@ -1,5 +1,6 @@
 package app.shakenback.ui
 
+import android.view.HapticFeedbackConstants
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.tween
@@ -12,6 +13,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalView
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.shakenback.AppViewModel
@@ -27,6 +29,15 @@ fun ShakeNBackApp(viewModel: AppViewModel = viewModel()) {
     val settings by viewModel.settings.collectAsStateWithLifecycle()
     val history by viewModel.history.collectAsStateWithLifecycle()
     val speechReady by viewModel.speechReady.collectAsStateWithLifecycle()
+
+    val view = LocalView.current
+    val shakeEnabled = settings.shakeControls && viewModel.shakeAvailable
+
+    ShakeEffect(enabled = shakeEnabled) {
+        if (viewModel.onShake() && settings.haptics) {
+            view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
+        }
+    }
 
     BackHandler(enabled = screen != Screen.Home) {
         if (screen == Screen.Game) viewModel.abortSession() else viewModel.navigate(Screen.Home)
@@ -44,6 +55,7 @@ fun ShakeNBackApp(viewModel: AppViewModel = viewModel()) {
                     settings = settings,
                     history = history,
                     speechReady = speechReady,
+                    shakeHint = shakeEnabled,
                     onStart = viewModel::startSession,
                     onOpenSettings = { viewModel.navigate(Screen.Settings) },
                 )
@@ -52,6 +64,7 @@ fun ShakeNBackApp(viewModel: AppViewModel = viewModel()) {
                     GameScreen(
                         state = game,
                         haptics = settings.haptics,
+                        shakeHint = shakeEnabled,
                         onRespond = viewModel::respond,
                         onQuit = viewModel::abortSession,
                     )
@@ -59,6 +72,8 @@ fun ShakeNBackApp(viewModel: AppViewModel = viewModel()) {
                 is Screen.Results -> ResultsScreen(
                     result = current.result,
                     outcome = current.outcome,
+                    haptics = settings.haptics,
+                    shakeHint = shakeEnabled,
                     onPlayAgain = viewModel::startSession,
                     onHome = { viewModel.navigate(Screen.Home) },
                 )

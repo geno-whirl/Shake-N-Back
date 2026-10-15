@@ -49,6 +49,8 @@ import kotlin.math.roundToInt
 fun ResultsScreen(
     result: SessionResult,
     outcome: LevelOutcome,
+    haptics: Boolean,
+    shakeHint: Boolean,
     onPlayAgain: () -> Unit,
     onHome: () -> Unit,
 ) {
@@ -63,14 +65,14 @@ fun ResultsScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Text(
-                text = when (outcome.change) {
-                    LevelChange.UP -> "Level up!"
-                    LevelChange.DOWN -> "Stepping back a level"
-                    LevelChange.SAME -> "Session complete"
-                },
-                style = MaterialTheme.typography.headlineMedium,
-            )
+            if (outcome.change == LevelChange.UP) {
+                FistBump(haptics = haptics)
+            } else {
+                Text(
+                    text = if (outcome.change == LevelChange.DOWN) "Stepping back a level" else "Session complete",
+                    style = MaterialTheme.typography.headlineMedium,
+                )
+            }
             ScoreRing(score = result.overall)
             Text(
                 text = outcomeDetail(result, outcome),
@@ -99,12 +101,19 @@ fun ResultsScreen(
             ) {
                 Text("Home")
             }
+            if (shakeHint) {
+                Text(
+                    text = "Shake to go again",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
         }
     }
 }
 
 private fun outcomeDetail(result: SessionResult, outcome: LevelOutcome): String = when (outcome.change) {
-    LevelChange.UP -> "You cleared ${result.n}-back. Next up: ${outcome.level}-back."
+    LevelChange.UP -> "Level up! You cleared ${result.n}-back. Next up: ${outcome.level}-back."
     LevelChange.DOWN -> "Three low scores at ${result.n}-back. Rebuild at ${outcome.level}-back."
     LevelChange.SAME -> if (outcome.strikes > 0) {
         "${outcome.strikes} of ${LevelRules.STRIKES_TO_FALLBACK} low scores at ${result.n}-back."

@@ -11,6 +11,8 @@ data class Settings(
     val autoProgress: Boolean = true,
     val showFeedback: Boolean = true,
     val haptics: Boolean = true,
+    /** Shake the phone to start a session, or to restart one mid-game. */
+    val shakeControls: Boolean = true,
 ) {
     companion object {
         const val DEFAULT_TRIAL_MILLIS = 3_000L

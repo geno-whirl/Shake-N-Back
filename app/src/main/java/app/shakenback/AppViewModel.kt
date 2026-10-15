@@ -1,6 +1,8 @@
 package app.shakenback
 
 import android.app.Application
+import android.hardware.Sensor
+import android.hardware.SensorManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import app.shakenback.audio.LetterSpeaker
@@ -66,6 +68,8 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     val history: StateFlow<List<SessionRecord>> =
         repository.history.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
     val speechReady: StateFlow<Boolean?> = speaker.ready
+    val shakeAvailable: Boolean = application.getSystemService(SensorManager::class.java)
+        ?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null
 
     private val _screen = MutableStateFlow<Screen>(Screen.Home)
     val screen: StateFlow<Screen> = _screen.asStateFlow()
@@ -115,6 +119,19 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
             }
             finish(active, current)
         }
+    }
+
+    /**
+     * Shake starts a session from Home or Results, and restarts a running one.
+     * Returns whether the shake did anything.
+     */
+    fun onShake(): Boolean = when (_screen.value) {
+        Screen.Home, Screen.Game, is Screen.Results -> {
+            speaker.stop()
+            startSession()
+            true
+        }
+        Screen.Settings -> false
     }
 
     fun respond(modality: Modality) {

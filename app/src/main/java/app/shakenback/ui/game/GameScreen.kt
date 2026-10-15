@@ -72,6 +72,7 @@ import app.shakenback.ui.theme.LocalFeedbackColors
 fun GameScreen(
     state: GameUiState,
     haptics: Boolean,
+    shakeHint: Boolean,
     onRespond: (Modality) -> Unit,
     onQuit: () -> Unit,
 ) {
@@ -112,7 +113,7 @@ fun GameScreen(
             },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        GameHeader(state = state, onQuit = onQuit)
+        GameHeader(state = state, shakeHint = shakeHint, onQuit = onQuit)
         Spacer(Modifier.weight(1f))
         Box(
             modifier = Modifier
@@ -153,7 +154,7 @@ fun GameScreen(
 }
 
 @Composable
-private fun GameHeader(state: GameUiState, onQuit: () -> Unit) {
+private fun GameHeader(state: GameUiState, shakeHint: Boolean, onQuit: () -> Unit) {
     val progress by animateFloatAsState(
         targetValue = if (state.trialCount == 0 || state.countdown != null) 0f
         else (state.trial + 1f) / state.trialCount,
@@ -187,16 +188,28 @@ private fun GameHeader(state: GameUiState, onQuit: () -> Unit) {
                 .padding(horizontal = 8.dp, vertical = 8.dp)
                 .height(6.dp),
         )
-        Text(
-            text = when {
-                state.countdown != null -> "Get ready"
-                state.inWarmUp -> "Memorise the first ${state.n}"
-                else -> "Same as ${state.n} back?"
-            },
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        Row(
             modifier = Modifier.padding(horizontal = 8.dp),
-        )
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = when {
+                    state.countdown != null -> "Get ready"
+                    state.inWarmUp -> "Memorise the first ${state.n}"
+                    else -> "Same as ${state.n} back?"
+                },
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.weight(1f),
+            )
+            if (shakeHint) {
+                Text(
+                    text = "Shake to restart",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.outline,
+                )
+            }
+        }
     }
 }
 
