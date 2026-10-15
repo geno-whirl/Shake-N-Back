@@ -14,7 +14,8 @@ Each turn a square lights up on a 3×3 grid and a letter is spoken. Tap **Positi
   - score = hits / (hits + misses + false alarms), pooled across both modalities
 - Material 3 UI with a stock-car palette (racing red, blue, caution yellow; asphalt in dark mode), checkered-flag touches, and edge-to-edge layout
 - Animated grid, countdown, answer feedback, haptics, and a results ring
-- A chart of your level history, plus today/total/peak stats
+- Home and Results fit on one screen: level history chart, today/laps/peak stats, confetti on level-ups and perfect runs
+- Calm indigo game grid (the racing colours stay off the play screen)
 - Change level and toggle auto-levelling right from Home; after a level-up you can choose to stay
 - Settings: manual level, time per turn (2–4 s), auto-levelling, feedback, haptics
 - Letters are spoken with the system text-to-speech engine, so there are no audio assets

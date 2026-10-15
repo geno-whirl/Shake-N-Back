@@ -66,7 +66,7 @@ import app.shakenback.ButtonFeedback
 import app.shakenback.GameUiState
 import app.shakenback.core.Modality
 import app.shakenback.core.Stimuli
-import app.shakenback.ui.theme.LocalFeedbackColors
+import app.shakenback.ui.theme.LocalGameColors
 
 @Composable
 fun GameScreen(
@@ -182,6 +182,8 @@ private fun GameHeader(state: GameUiState, shakeHint: Boolean, onQuit: () -> Uni
         }
         LinearProgressIndicator(
             progress = { progress },
+            color = LocalGameColors.current.tile,
+            trackColor = MaterialTheme.colorScheme.surfaceContainerHigh,
             strokeCap = StrokeCap.Round,
             modifier = Modifier
                 .fillMaxWidth()
@@ -242,8 +244,9 @@ private fun StimulusGrid(activeCell: Int?, modifier: Modifier = Modifier) {
 @Composable
 private fun GridCell(active: Boolean, modifier: Modifier = Modifier) {
     val colors = MaterialTheme.colorScheme
+    val tile = LocalGameColors.current.tile
     val color by animateColorAsState(
-        targetValue = if (active) colors.primary else colors.surfaceContainerHigh,
+        targetValue = if (active) tile else colors.surfaceContainerHigh,
         animationSpec = tween(if (active) 90 else 260),
         label = "cellColor",
     )
@@ -264,7 +267,7 @@ private fun GridCell(active: Boolean, modifier: Modifier = Modifier) {
                 scaleX = scale
                 scaleY = scale
             }
-            .shadow(glow, shape, ambientColor = colors.primary, spotColor = colors.primary)
+            .shadow(glow, shape, ambientColor = tile, spotColor = tile)
             .clip(shape)
             .background(color),
     )
@@ -294,13 +297,13 @@ private fun Countdown(value: Int?) {
                 modifier = Modifier
                     .size(132.dp)
                     .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.primary),
+                    .background(LocalGameColors.current.tile),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
                     text = count.toString(),
                     style = MaterialTheme.typography.displayLarge,
-                    color = MaterialTheme.colorScheme.onPrimary,
+                    color = LocalGameColors.current.onTile,
                 )
             }
         }
@@ -317,12 +320,12 @@ private fun ResponseButton(
     modifier: Modifier = Modifier,
 ) {
     val colors = MaterialTheme.colorScheme
-    val feedbackColors = LocalFeedbackColors.current
+    val gameColors = LocalGameColors.current
     val (targetContainer, targetContent) = when (feedback) {
         ButtonFeedback.IDLE -> colors.surfaceContainerHigh to colors.onSurface
-        ButtonFeedback.PRESSED -> colors.primaryContainer to colors.onPrimaryContainer
-        ButtonFeedback.CORRECT -> feedbackColors.correct to feedbackColors.onCorrect
-        ButtonFeedback.WRONG -> feedbackColors.wrong to feedbackColors.onWrong
+        ButtonFeedback.PRESSED -> gameColors.tileContainer to gameColors.onTileContainer
+        ButtonFeedback.CORRECT -> gameColors.correct to gameColors.onCorrect
+        ButtonFeedback.WRONG -> gameColors.wrong to gameColors.onWrong
     }
     val container by animateColorAsState(targetContainer, tween(150), label = "buttonContainer")
     val content by animateColorAsState(targetContent, tween(150), label = "buttonContent")

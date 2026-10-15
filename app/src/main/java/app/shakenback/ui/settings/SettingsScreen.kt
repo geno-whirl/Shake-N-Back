@@ -56,7 +56,7 @@ fun SettingsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Settings") },
+                title = { Text("Pit garage 🔧") },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
@@ -92,7 +92,7 @@ fun SettingsScreen(
                 }
                 SettingsCard {
                     SwitchRow(
-                        title = "Automatic levelling",
+                        title = "📈 Automatic levelling",
                         subtitle = "Up at ${(LevelRules.ADVANCE_THRESHOLD * 100).roundToInt()}%, " +
                             "down after ${LevelRules.STRIKES_TO_FALLBACK} sessions below " +
                             "${(LevelRules.FALLBACK_THRESHOLD * 100).roundToInt()}%",
@@ -101,21 +101,21 @@ fun SettingsScreen(
                     )
                     HorizontalDivider()
                     SwitchRow(
-                        title = "Answer feedback",
+                        title = "🎯 Answer feedback",
                         subtitle = "Flash buttons green or red as you answer",
                         checked = settings.showFeedback,
                         onCheckedChange = { value -> onChange { it.copy(showFeedback = value) } },
                     )
                     HorizontalDivider()
                     SwitchRow(
-                        title = "Shake controls",
+                        title = "📳 Shake controls",
                         subtitle = "Shake to start a session, or to restart one mid-game",
                         checked = settings.shakeControls,
                         onCheckedChange = { value -> onChange { it.copy(shakeControls = value) } },
                     )
                     HorizontalDivider()
                     SwitchRow(
-                        title = "Haptics",
+                        title = "✨ Haptics",
                         subtitle = "Vibrate lightly on each tap",
                         checked = settings.haptics,
                         onCheckedChange = { value -> onChange { it.copy(haptics = value) } },
@@ -162,11 +162,11 @@ private fun SettingsCard(content: @Composable () -> Unit) {
 @Composable
 private fun LevelStepper(level: Int, onLevelChange: (Int) -> Unit) {
     Row(
-        modifier = Modifier.padding(vertical = 12.dp),
+        modifier = Modifier.padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(Modifier.weight(1f)) {
-            Text("Level", style = MaterialTheme.typography.titleMedium)
+            Text("🎚️ Level", style = MaterialTheme.typography.titleMedium)
             Text(
                 text = "Set your N manually",
                 style = MaterialTheme.typography.bodySmall,
@@ -193,9 +193,9 @@ private fun LevelStepper(level: Int, onLevelChange: (Int) -> Unit) {
 private fun TrialSpeed(millis: Long, onChange: (Long) -> Unit) {
     // Local state keeps the slider smooth; persist only when the drag ends.
     var seconds by remember(millis) { mutableFloatStateOf(millis / 1000f) }
-    Column(Modifier.padding(vertical = 12.dp)) {
+    Column(Modifier.padding(vertical = 8.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("Time per turn", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+            Text("⏱️ Time per turn", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
             Text(
                 text = String.format(Locale.US, "%.1f s", seconds),
                 style = MaterialTheme.typography.titleMedium,
@@ -220,7 +220,7 @@ private fun SwitchRow(
     onCheckedChange: (Boolean) -> Unit,
 ) {
     Row(
-        modifier = Modifier.padding(vertical = 12.dp),
+        modifier = Modifier.padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(

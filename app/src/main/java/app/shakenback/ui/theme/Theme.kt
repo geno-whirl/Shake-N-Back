@@ -73,30 +73,48 @@ private val DarkColors = darkColorScheme(
 /** Navy for race numbers on white roundels; the same in light and dark themes. */
 val RaceNavy = Color(0xFF1E3A8A)
 
-/** Colours Material 3 doesn't name: answer feedback. */
+/** Second stop of the hero gradient, red into orange like a sunset at the track. */
+val RaceOrange = Color(0xFFF97316)
+
+/**
+ * Colours for the game screen, which stays calm (indigo) so the bright racing
+ * palette doesn't tire the eyes mid-session, plus answer feedback.
+ */
 @Immutable
-data class FeedbackColors(
+data class GameColors(
+    val tile: Color,
+    val onTile: Color,
+    val tileContainer: Color,
+    val onTileContainer: Color,
     val correct: Color,
     val onCorrect: Color,
     val wrong: Color,
     val onWrong: Color,
 )
 
-private val LightFeedback = FeedbackColors(
+private val LightGame = GameColors(
+    tile = Color(0xFF4F46E5),
+    onTile = Color.White,
+    tileContainer = Color(0xFFE0E7FF),
+    onTileContainer = Color(0xFF1E1B4B),
     correct = Color(0xFFD1FAE5),
     onCorrect = Color(0xFF065F46),
     wrong = Color(0xFFFFE4E6),
     onWrong = Color(0xFF9F1239),
 )
 
-private val DarkFeedback = FeedbackColors(
+private val DarkGame = GameColors(
+    tile = Color(0xFFA5B4FC),
+    onTile = Color(0xFF1E1B4B),
+    tileContainer = Color(0xFF3730A3),
+    onTileContainer = Color(0xFFE0E7FF),
     correct = Color(0xFF064E3B),
     onCorrect = Color(0xFFA7F3D0),
     wrong = Color(0xFF4C0519),
     onWrong = Color(0xFFFECDD3),
 )
 
-val LocalFeedbackColors = staticCompositionLocalOf { LightFeedback }
+val LocalGameColors = staticCompositionLocalOf { LightGame }
 
 private val AppTypography = Typography().run {
     copy(
@@ -118,7 +136,7 @@ fun ShakeNBackTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    CompositionLocalProvider(LocalFeedbackColors provides if (darkTheme) DarkFeedback else LightFeedback) {
+    CompositionLocalProvider(LocalGameColors provides if (darkTheme) DarkGame else LightGame) {
         MaterialTheme(
             colorScheme = if (darkTheme) DarkColors else LightColors,
             typography = AppTypography,
