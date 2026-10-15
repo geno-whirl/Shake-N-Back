@@ -39,7 +39,10 @@ Requirements: JDK 17+ and the Android SDK (API 35).
 ./gradlew :app:installDebug   # install on a connected device
 ```
 
-CI (`.github/workflows/build.yml`) runs the tests and uploads a debug APK as a build artifact on every push.
+CI (`.github/workflows/build.yml`) runs the tests on every push and publishes the APK as the rolling `latest-build` pre-release:
+<https://github.com/geno-whirl/Shake-N-Back/releases/download/latest-build/shake-n-back-debug.apk>
+
+Debug builds are signed with the committed `app/debug.keystore` (standard Android debug credentials), so new builds install over old ones and keep your progress.
 
 ## Roadmap ideas
 

@@ -13,8 +13,20 @@ android {
         applicationId = "app.shakenback"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
+        // CI run number, so each published build installs as an update.
+        versionCode = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull() ?: 1
         versionName = "0.1.0"
+    }
+
+    signingConfigs {
+        // Committed debug key (standard Android debug credentials) so every
+        // machine and CI run signs identically and builds install over each other.
+        getByName("debug") {
+            storeFile = file("debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
     }
 
     buildTypes {
