@@ -12,57 +12,66 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 
+// Stock-car palette: racing red, number-board blue and caution-flag yellow on
+// warm white (light) or asphalt (dark). A wink at Talladega Nights.
 private val LightColors = lightColorScheme(
-    primary = Color(0xFF4F46E5),
+    primary = Color(0xFFD62828),
     onPrimary = Color.White,
-    primaryContainer = Color(0xFFE0E7FF),
-    onPrimaryContainer = Color(0xFF1E1B4B),
-    secondary = Color(0xFF0D9488),
+    primaryContainer = Color(0xFFFFDAD6),
+    onPrimaryContainer = Color(0xFF410002),
+    secondary = Color(0xFF1D4ED8),
     onSecondary = Color.White,
-    secondaryContainer = Color(0xFFCCFBF1),
-    onSecondaryContainer = Color(0xFF042F2E),
-    tertiary = Color(0xFFDB2777),
-    onTertiary = Color.White,
-    background = Color(0xFFF7F7FB),
-    onBackground = Color(0xFF16172B),
-    surface = Color(0xFFF7F7FB),
-    onSurface = Color(0xFF16172B),
-    surfaceVariant = Color(0xFFE4E5F1),
-    onSurfaceVariant = Color(0xFF55576E),
+    secondaryContainer = Color(0xFFDBE4FF),
+    onSecondaryContainer = Color(0xFF001A41),
+    tertiary = Color(0xFFF2B600),
+    onTertiary = Color(0xFF261A00),
+    tertiaryContainer = Color(0xFFFFE08A),
+    onTertiaryContainer = Color(0xFF261A00),
+    background = Color(0xFFFBF8F4),
+    onBackground = Color(0xFF1E1B18),
+    surface = Color(0xFFFBF8F4),
+    onSurface = Color(0xFF1E1B18),
+    surfaceVariant = Color(0xFFECE6E0),
+    onSurfaceVariant = Color(0xFF57524D),
     surfaceContainerLowest = Color.White,
-    surfaceContainerLow = Color(0xFFF1F1F8),
-    surfaceContainer = Color(0xFFEBEBF4),
-    surfaceContainerHigh = Color(0xFFE5E5F0),
-    surfaceContainerHighest = Color(0xFFDFDFEB),
-    outline = Color(0xFF8A8CA3),
-    outlineVariant = Color(0xFFD4D5E3),
+    surfaceContainerLow = Color(0xFFF6F2EE),
+    surfaceContainer = Color(0xFFF0ECE7),
+    surfaceContainerHigh = Color(0xFFEAE5E0),
+    surfaceContainerHighest = Color(0xFFE4DFDA),
+    outline = Color(0xFF8A847E),
+    outlineVariant = Color(0xFFD9D2CB),
 )
 
 private val DarkColors = darkColorScheme(
-    primary = Color(0xFFA5B4FC),
-    onPrimary = Color(0xFF1E1B4B),
-    primaryContainer = Color(0xFF3730A3),
-    onPrimaryContainer = Color(0xFFE0E7FF),
-    secondary = Color(0xFF5EEAD4),
-    onSecondary = Color(0xFF042F2E),
-    secondaryContainer = Color(0xFF115E59),
-    onSecondaryContainer = Color(0xFFCCFBF1),
-    tertiary = Color(0xFFF9A8D4),
-    onTertiary = Color(0xFF500724),
-    background = Color(0xFF0E0F1A),
-    onBackground = Color(0xFFE6E6F2),
-    surface = Color(0xFF0E0F1A),
-    onSurface = Color(0xFFE6E6F2),
-    surfaceVariant = Color(0xFF2A2C40),
-    onSurfaceVariant = Color(0xFFB4B6CC),
-    surfaceContainerLowest = Color(0xFF090A12),
-    surfaceContainerLow = Color(0xFF151626),
-    surfaceContainer = Color(0xFF1A1B2D),
-    surfaceContainerHigh = Color(0xFF222438),
-    surfaceContainerHighest = Color(0xFF2B2D43),
-    outline = Color(0xFF7A7C94),
-    outlineVariant = Color(0xFF34364C),
+    primary = Color(0xFFE5383B),
+    onPrimary = Color.White,
+    primaryContainer = Color(0xFF8C1D18),
+    onPrimaryContainer = Color(0xFFFFDAD6),
+    secondary = Color(0xFF8AB4FF),
+    onSecondary = Color(0xFF002E69),
+    secondaryContainer = Color(0xFF1E3A8A),
+    onSecondaryContainer = Color(0xFFDBE4FF),
+    tertiary = Color(0xFFFFD54A),
+    onTertiary = Color(0xFF3A2A00),
+    tertiaryContainer = Color(0xFF5C4300),
+    onTertiaryContainer = Color(0xFFFFE08A),
+    background = Color(0xFF121316),
+    onBackground = Color(0xFFE6E2DE),
+    surface = Color(0xFF121316),
+    onSurface = Color(0xFFE6E2DE),
+    surfaceVariant = Color(0xFF2C2D33),
+    onSurfaceVariant = Color(0xFFC4C1C9),
+    surfaceContainerLowest = Color(0xFF0C0D10),
+    surfaceContainerLow = Color(0xFF1A1B1F),
+    surfaceContainer = Color(0xFF1E1F24),
+    surfaceContainerHigh = Color(0xFF26272D),
+    surfaceContainerHighest = Color(0xFF303138),
+    outline = Color(0xFF8E8B93),
+    outlineVariant = Color(0xFF3A3B42),
 )
+
+/** Navy for race numbers on white roundels; the same in light and dark themes. */
+val RaceNavy = Color(0xFF1E3A8A)
 
 /** Colours Material 3 doesn't name: answer feedback. */
 @Immutable
@@ -101,7 +110,7 @@ private val AppTypography = Typography().run {
 }
 
 /**
- * A fixed brand palette rather than Material You dynamic colour, so the game
+ * A fixed racing palette rather than Material You dynamic colour, so the game
  * looks the same on every device.
  */
 @Composable

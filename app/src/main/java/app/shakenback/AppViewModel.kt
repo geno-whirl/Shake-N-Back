@@ -165,6 +165,25 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch { repository.updateSettings(transform) }
     }
 
+    /** Manual level change; clears strikes since they count toward the old level. */
+    fun setLevel(level: Int) {
+        updateSettings {
+            it.copy(level = level.coerceIn(LevelRules.MIN_LEVEL, LevelRules.MAX_LEVEL), strikes = 0)
+        }
+    }
+
+    fun setAutoProgress(enabled: Boolean) {
+        updateSettings { it.copy(autoProgress = enabled) }
+    }
+
+    /** Sets the level, then starts a session at it once the change is saved. */
+    fun playAtLevel(level: Int) {
+        viewModelScope.launch {
+            repository.updateSettings { it.copy(level = level, strikes = 0) }
+            startSession()
+        }
+    }
+
     fun resetProgress() {
         viewModelScope.launch { repository.resetProgress() }
     }

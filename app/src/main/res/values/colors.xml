@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="brand_indigo">#FF4F46E5</color>
-    <color name="window_light">#FFF7F7FB</color>
-    <color name="window_dark">#FF0E0F1A</color>
+    <color name="brand_red">#FFD62828</color>
+    <color name="window_light">#FFFBF8F4</color>
+    <color name="window_dark">#FF121316</color>
 </resources>

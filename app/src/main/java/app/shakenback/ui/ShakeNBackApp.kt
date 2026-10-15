@@ -56,6 +56,8 @@ fun ShakeNBackApp(viewModel: AppViewModel = viewModel()) {
                     history = history,
                     speechReady = speechReady,
                     shakeHint = shakeEnabled,
+                    onLevelChange = viewModel::setLevel,
+                    onAutoProgressChange = viewModel::setAutoProgress,
                     onStart = viewModel::startSession,
                     onOpenSettings = { viewModel.navigate(Screen.Settings) },
                 )
@@ -75,6 +77,7 @@ fun ShakeNBackApp(viewModel: AppViewModel = viewModel()) {
                     haptics = settings.haptics,
                     shakeHint = shakeEnabled,
                     onPlayAgain = viewModel::startSession,
+                    onPlayAtLevel = viewModel::playAtLevel,
                     onHome = { viewModel.navigate(Screen.Home) },
                 )
                 Screen.Settings -> SettingsScreen(

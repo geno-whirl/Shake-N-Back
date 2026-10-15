@@ -52,6 +52,7 @@ fun ResultsScreen(
     haptics: Boolean,
     shakeHint: Boolean,
     onPlayAgain: () -> Unit,
+    onPlayAtLevel: (Int) -> Unit,
     onHome: () -> Unit,
 ) {
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
@@ -92,6 +93,18 @@ fun ResultsScreen(
             ) {
                 Text("Play ${outcome.level}-back", style = MaterialTheme.typography.titleMedium)
             }
+            // Levelling up is a suggestion: let the player stay where they were.
+            if (outcome.change == LevelChange.UP) {
+                OutlinedButton(
+                    onClick = { onPlayAtLevel(result.n) },
+                    shape = RoundedCornerShape(24.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+                ) {
+                    Text("Stay at ${result.n}-back")
+                }
+            }
             OutlinedButton(
                 onClick = onHome,
                 shape = RoundedCornerShape(24.dp),
@@ -131,6 +144,7 @@ private fun ScoreRing(score: Double) {
     val track = MaterialTheme.colorScheme.surfaceContainerHigh
     val primary = MaterialTheme.colorScheme.primary
     val tertiary = MaterialTheme.colorScheme.tertiary
+    val secondary = MaterialTheme.colorScheme.secondary
     Box(Modifier.size(196.dp), contentAlignment = Alignment.Center) {
         Canvas(Modifier.fillMaxSize()) {
             val stroke = Stroke(width = 18.dp.toPx(), cap = StrokeCap.Round)
@@ -139,7 +153,7 @@ private fun ScoreRing(score: Double) {
             val topLeft = Offset(inset, inset)
             drawArc(track, startAngle = 0f, sweepAngle = 360f, useCenter = false, topLeft = topLeft, size = arcSize, style = stroke)
             drawArc(
-                brush = Brush.sweepGradient(listOf(primary, tertiary, primary)),
+                brush = Brush.sweepGradient(listOf(primary, tertiary, secondary, primary)),
                 startAngle = -90f,
                 sweepAngle = 360f * sweep.value,
                 useCenter = false,

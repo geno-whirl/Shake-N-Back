@@ -57,7 +57,8 @@ fun FistBump(haptics: Boolean, modifier: Modifier = Modifier) {
         title.animateTo(1f, spring(dampingRatio = 0.45f, stiffness = Spring.StiffnessLow))
     }
 
-    val burstColor = MaterialTheme.colorScheme.tertiary
+    val colors = MaterialTheme.colorScheme
+    val sparkColors = listOf(colors.primary, colors.tertiary, colors.secondary)
     Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             modifier = Modifier
@@ -68,14 +69,14 @@ fun FistBump(haptics: Boolean, modifier: Modifier = Modifier) {
             Canvas(Modifier.size(150.dp)) {
                 val progress = burst.value
                 if (progress <= 0f || progress >= 1f) return@Canvas
-                val color = burstColor.copy(alpha = 1f - progress)
+                val alpha = 1f - progress
                 val radius = size.minDimension / 2 * progress
-                drawCircle(color, radius = radius, style = Stroke(width = 3.dp.toPx()))
+                drawCircle(colors.tertiary.copy(alpha = alpha), radius = radius, style = Stroke(width = 3.dp.toPx()))
                 repeat(SPARKS) { i ->
                     val angle = (2 * PI * i / SPARKS).toFloat()
                     val direction = Offset(cos(angle), sin(angle))
                     drawLine(
-                        color = color,
+                        color = sparkColors[i % sparkColors.size].copy(alpha = alpha),
                         start = center + direction * (radius * 0.55f),
                         end = center + direction * (radius * 0.95f),
                         strokeWidth = 4.dp.toPx(),
